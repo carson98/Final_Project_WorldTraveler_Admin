@@ -1,9 +1,4 @@
-<div class="sidebar" data-color="purple" data-background-color="white">
-    <!--
-      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-      Tip 2: you can also add an image using data-image tag
-  -->
+<div class="sidebar" data-color="orange" data-background-color="black">
     <div class="logo">
         <a href="/" class="simple-text logo-mini">
             {{sessionUser.fullName}}
@@ -17,35 +12,36 @@
             <li class="nav-item {{#if dashboard}} active {{/if}} ">
                 <a class="nav-link" href="/">
                     <i class="material-icons">dashboard</i>
-                    <p>Dashboard</p>
+                    <p>{{__ "Dashboard"}}</p>
                 </a>
             </li>
-            <li class="nav-item {{#if product}} active {{/if}} ">
-                <a class="nav-link" href="/product/productList/1">
-                    <i class="material-icons">content_paste</i>
-                    <p>Product Management</p>
+            <li class="nav-item {{#if tour}} active {{/if}} ">
+                <a class="nav-link" href="/tour/tourList/1">
+                    <i class="material-icons">library_books</i>
+                    <p>{{__ "Tour Management"}}</p>
                 </a>
             </li>
             <li class="nav-item {{#if person}} active {{/if}} ">
                 <a class="nav-link" href="/user/userList/1">
                     <i class="material-icons">person</i>
-                    <p>User Management</p>
+                    <p>{{__ "User Management"}}</p>
                 </a>
             </li>
             <li class="nav-item {{#if orders}} active {{/if}} ">
                 <a class="nav-link" href="/order/orderList">
-                    <i class="material-icons">receipt</i>
-                    <p>Order Management</p>
+                    <i class="material-icons">bookmarks</i>
+                    <p>{{__ "Booking Management"}}</p>
                 </a>
             </li>
             <li class="nav-item {{#if coupon}} active {{/if}} ">
                 <a class="nav-link" href="/coupon/couponList/1">
-                    <i class="material-icons">gift</i>
-                    <p>Coupon Management</p>
+                    <i class="material-icons">redeem</i>
+                    <p>{{__ "Coupon Management"}}</p>
                 </a>
             </li>
             <!-- your sidebar here -->
         </ul>
     </div>
+    <div class="sidebar-background" style="background-image: url(/images/sidebar-1.jpg) "></div>
 </div>
 

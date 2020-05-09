@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 var User = require('../models/user')
 var csrf = require('csurf');
 var passport = require('passport')
@@ -147,7 +147,7 @@ router.post('/userUpl/:id', (req, res) => {
     new: true
   }, async (err, doc) => {
     if (doc.role == 'Customer') {
-      await Product.updateMany({
+      await Tour.updateMany({
         'orderList.userInfo.email': doc.email
       }, {
         '$set': {

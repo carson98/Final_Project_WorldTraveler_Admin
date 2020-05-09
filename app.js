@@ -13,9 +13,10 @@ var indexRouter = require('./routes/index');
 var couponRouter = require('./routes/coupons')
 var orderRouter = require('./routes/order');
 var usersRouter = require('./routes/users');
-var productRouter = require('./routes/product')
+var tourRouter = require('./routes/tour')
 var bodyParser = require('body-parser')
 var glosbe_Daily = require('./config/setup_GlosbeDaily')
+var i18n = require('i18n')
 
 var app = express();
 mongoose.connect('mongodb://localhost:27017/shopping', {
@@ -26,6 +27,10 @@ require('./config/passport')
 app.engine('.hbs', expressHbs({
   defaultLayout: 'layout',
   extname: '.hbs',
+  helpers: {
+    __: function() { return i18n.__.apply(this, arguments); },
+    __n: function() { return i18n.__n.apply(this, arguments); }
+  },
   layoutsDir: __dirname + '/views/layouts/',
   partialsDir: __dirname + '/views/partials/'
 }))
@@ -54,14 +59,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/product', productRouter)
+
+i18n.configure({
+  locales: ['vn', 'en'],
+  fallbacks: {'en': 'vn'},
+  defaultLocale: 'en',
+  cookie: 'locale',
+  queryParameter: 'lang',
+  directory: __dirname + '/locales',
+  directoryPermissions: '755',
+  autoReload: true,
+  updateFiles: true,
+  api: {
+    '__': '__',  //now req.__ becomes req.__
+    '__n': '__n' //and req.__n can be called as req.__n
+  }
+});
+app.use(i18n.init);
+
+app.get('/vn', function (req, res) {
+  res.cookie('locale', 'vn', { maxAge: 900000, httpOnly: true });
+  res.redirect('back');
+});
+
+app.get('/en', function (req, res) {
+  res.cookie('locale', 'en', { maxAge: 900000, httpOnly: true });
+  res.redirect('back');
+});
+
+app.use('/tour', tourRouter)
 app.use('/order', orderRouter);
 app.use('/coupon', couponRouter);
 app.use('/user', usersRouter);
 app.use('/', indexRouter);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

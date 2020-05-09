@@ -1,0 +1,280 @@
+<div class="content">
+  <div class="container-fluid"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-warning row">
+          <div class="col-6">
+            <h4 class="card-title mt-0">Tour Information</h4>
+            <p class="card-category">Synthesize information of this tour</p>
+          </div>
+          <div class="col-6">
+            <a href="/tour/tour-upload/{{proDetail._id}}" type="button" class="btn btn-warning pull-right"><i
+                class="material-icons">edit</i></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            {{!-- Detail of tour --}}
+            <div class="col-8" style="padding-left:50px;">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Detail of tour</h4>
+                </div>
+                <div class="card-body">
+                  <form>
+                    {{#proDetail}}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Tour ID:</label>
+                          <p>{{this._id}}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Tour Name:</label>
+                          <p>{{this.title}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Category:</label>
+                          {{#if this.category}}
+                          <p>Domestic</p>
+                          {{else}}
+                          <p>International</p>
+                          {{/if}}
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Tour Rate:</label>
+                          <p>{{this.tourRate}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Depart:</label>
+                          <div name="depart" id="depart">
+                            <p>{{this.depart}}</p>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Destination:</label>
+                          <p>{{this.destination}}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Date:</label>
+                          <p>{{this.date}}</p>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Duration:</label>
+                          <p>{{this.duration}}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Seat Available:</label>
+                          <p>{{this.seat}}</p>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Price:</label>
+                          <p>${{this.price}}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {{/proDetail}}
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{!-- IMG --}}
+            <div class="col-4" style="padding-right:50px;">
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <img src="../../images/{{proDetail.imagePath}}"
+                      class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                      alt="Image Tour" />
+                  </div>
+                  <h6 class="card-category text-gray text-center">{{proDetail.title}}</h6>
+                </div>
+              </div>
+            </div>
+
+            {{!-- Tour Schedule --}}
+            <div class="col-12" style="padding-left:50px;padding-right:50px;">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Tour Schedule:</h4>
+                </div>
+                <div class="card-body">
+                  <textarea id="description"
+                    style="overflow: scroll; height: 288px;">{{proDetail.description}}</textarea>
+                </div>
+              </div>
+            </div>
+
+            {{!-- Order List --}}
+            <div class="col-12" style="padding-left:50px;padding-right:50px;">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Order List:</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="text-warning">
+                        <th>
+                          No.
+                        </th>
+                        <th>
+                          Order Date
+                        </th>
+                        <th>
+                          Cus Name
+                        </th>
+                        <th>
+                          Cus Phone
+                        </th>
+                        <th>
+                          Cus Address
+                        </th>
+                        <th>
+                          Discount
+                        </th>
+                        <th>
+                          Total Quantity
+                        </th>
+                        <th>
+                          Size
+                        </th>
+                        <th>
+                          Total Price
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                      </thead>
+                      <tbody>
+                        {{#each orderDetail}}
+                        <tr>
+                          <td>
+                            {{this.numberOrder}}
+                          </td>
+                          <td>
+                            {{this.orderDate}}
+                          </td>
+                          <td>
+                            {{this.userInfo.name}}
+                          </td>
+                          <td>
+                            {{this.userInfo.phoneNum}}
+                          </td>
+                          <td>
+                            {{this.userInfo.address}}
+                          </td>
+                          <td>
+                            {{this.couponCode.description}}
+                          </td>
+                          <td>
+                            {{this.totalQuantity}}
+                          </td>
+                          <td>
+                            {{this.Size}}
+                          </td>
+                          <td>
+                            $ {{this.totalPrice}}
+                          </td>
+                          <td>
+                            {{this.status}}
+                          </td>
+                        </tr>
+                        {{/each}}
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+
+                          <td>
+                            <h4 class="">Total:</h4>
+                          </td>
+                          <td>
+                            <h4>{{totalOrderQty}}</h4>
+                          </td>
+                          <td></td>
+                          <td nowrap>
+                            <h4>$ {{totalOrderPrice}}</h4>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-11">
+              <a href="/tour/tourList/1" type="button" class="btn btn-warning btn-round pull-right">Back to
+                list
+                <div class="ripple-container"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.14.0/standard-all/ckeditor.js"></script>
+<script>
+  var description = CKEDITOR.replace('description', {
+    extraAllowedContent: 'div',
+    height: 400
+  });
+  description.on('instanceReady', function () {
+    // Output self-closing tags the HTML4 way, like <br>.
+    this.dataProcessor.writer.selfClosingEnd = '>';
+
+    // Use line breaks for block elements, tables, and lists.
+    var dtd = CKEDITOR.dtd;
+    for (var e in CKEDITOR.tools.extend({}, dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent)) {
+      this.dataProcessor.writer.setRules(e, {
+        indent: true,
+        breakBeforeOpen: true,
+        breakAfterOpen: true,
+        breakBeforeClose: true,
+        breakAfterClose: true
+      });
+    }
+  });
+</script>

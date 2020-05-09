@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header card-header-primary row">
+        <div class="card-header card-header-warning row">
           <div class="col-6">
             <h4 class="card-title mt-0">Order Information</h4>
             <p class="card-category">Description about information of this order</p>
@@ -57,46 +57,38 @@
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Product Name:
-                            {{this.proName}}</label>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Size:
-                            {{this.Size}}</label>
+                          <label class="bmd-label-floating">Tour Name:</label>
+                          <p>{{this.proName}}</p>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Quantity:
-                            {{this.totalQuantity}}</label>
+                          <label class="bmd-label-floating">Tour Booked:</label>
+                          <p>{{this.totalQuantity}}</p>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label class="bmd-label-floating">Product Price:
-                            ${{this.proPrice}}</label>
+                          <label class="bmd-label-floating">Tour Price:</label>
+                          <p>${{this.proPrice}}</p>
                         </div>
                       </div>
                     </div>
                     {{/each}}
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Discount Code:</label>
                           <p>{{this.couponCode._id}}</p>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Discount (%):</label>
                           <p>{{this.couponCode.description}}</p>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Total price:</label>
                           <p> ${{this.totalPrice}}</p>
@@ -117,7 +109,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <button name="" id="" class="btn btn-primary pull-right" role="button">Update</button>
+                      <button name="" id="" class="btn btn-warning pull-right" role="button">Update</button>
                     </div>
                     {{/orderDetail}}
                   </form>
@@ -125,26 +117,25 @@
               </div>
             </div>
 
-            <div class="col-4 row">
+            <div class="col-4" style="padding-right:50px;">
               {{#each orderDetail.orderList}}
-                <div class="card col-6">
-                  <div class="card-body">
-                    <div class="form-group">
-                      <img src="../../images/{{this.img}}"
-                        class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-                        alt="Image Product" />
-                    </div>
-                    <h6 class="card-category text-gray text-center">{{this.proName}}</h6>
-                    <h6 class="card-category text-gray text-center">Size: {{this.Size}}</h6>
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <img src="../../images/{{this.img}}"
+                      class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                      alt="Image Tour" />
                   </div>
+                  <h6 class="card-category text-gray text-center">{{this.proName}}</h6>
                 </div>
+              </div>
               {{/each}}
             </div>
 
           </div>
           <div class="form-group row">
             <div class="col-sm-12">
-              <a href="/order/orderList" type="button" class="btn btn-primary btn-round pull-right">Back to list
+              <a href="/order/orderList" type="button" class="btn btn-warning btn-round pull-right">Back to list
                 <div class="ripple-container"></div>
               </a>
             </div>

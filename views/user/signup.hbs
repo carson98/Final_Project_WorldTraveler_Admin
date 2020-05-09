@@ -1,11 +1,11 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Edit Profile</h4>
-                        <p class="card-category">Complete your profile</p>
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title">Add New User</h4>
+                        <p class="card-category">Create user account</p>
                     </div>
                     <div class="card-body">
                         {{#if users}}
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                            <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                            <button type="submit" class="btn btn-primary pull-right">Upload Profile</button>
                             <div class="clearfix"></div>
                         </form>
 
@@ -207,57 +207,14 @@
                                 </div>
                             </div>
                             <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                            <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                            <button type="submit" class="btn btn-warning pull-right">Upload Profile</button>
+                            <a type="button" href="/user/userList" class="btn btn-warning pull-right">Back to
+                                List</a>
                             <div class="clearfix"></div>
                         </form>
                         {{/if}}
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="#">
-                            <img class="img" src="../../images/avatar-01.jpg" />
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        {{!-- CEO / Co-Founder of COZA company --}}
-                        <h6 class="card-category text-gray">{{users.role}} of COZA company</h6>
-                        <h4 class="card-title">{{users.fullName}}</h4>
-                        <p class="card-description">
-                            {{users.description}}
-                        </p>
-                        {{#if orderList}}
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Order List</h3>
-                            </div>
-                            {{#each orderList}}
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="form-group">
-                                        {{this.orderDate}}
-                                    </div>
-
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <a href="/order/orderDetail/{{this.id}}-{{this.number}}">Detail</a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            {{/each}}
-                        </div>
-
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <a type="button" href="/user/userList" class="btn btn-primary pull-right">Back to List</a>
             </div>
         </div>
     </div>

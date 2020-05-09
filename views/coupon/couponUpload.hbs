@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Upload Coupon
-                            <a type="button" class="btn btn-primary pull-right" data-toggle="modal"
-                                data-target="#modelId">Upload File</a>
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title">Create Coupon
+                            <a type="button" class="btn btn-warning pull-right" data-toggle="modal"
+                                data-target="#modelId">Send file coupon to customer</a>
                         </h4>
-
+                        <p class="card-category">Create information of this coupon</p>
                     </div>
                     <div class="card-body">
                         {{#if coupons}}
@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Counpon ID:</label>
+                                        <label class="bmd-label-floating">Coupon ID:</label>
                                         <p>{{coupons._id}}</p>
                                     </div>
                                 </div>
@@ -24,7 +24,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Counpon Description:</label>
+                                        <label class="bmd-label-floating">Coupon Description:</label>
                                         <input value="{{coupons.description}}" id="description" name="description"
                                             type="text" class="form-control" required>
                                     </div>
@@ -54,8 +54,8 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary pull-right">Upload</button>
-                            <a href="../couponList/1" type="button" class="btn btn-primary pull-right">Back List</a>
+                            <button type="submit" class="btn btn-warning pull-right">Upload</button>
+                            <a href="../couponList/1" type="button" class="btn btn-warning pull-right">Back List</a>
                             <div class="clearfix"></div>
                         </form>
                         {{else}}
@@ -94,16 +94,16 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Conpon number:</label>
+                                        <label class="bmd-label-floating">Coupon number:</label>
                                         <input id="quantity" name="quantity" type="number" class="form-control" min="1"
                                             max="500" placeholder="From 1 to 500" required>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary pull-right">Upload</button>
-                            <a href="../couponList/1" type="button" class="btn btn-primary pull-right">Back List</a>
+                            <button type="submit" class="btn btn-warning pull-right">Upload</button>
+                            <a href="../couponList/1" type="button" class="btn btn-warning pull-right">Back List</a>
                             <a href="/coupon/dowload_Template" type="button"
-                                class="btn btn-primary pull-left">Download</a>
+                                class="btn btn-warning pull-left">Create file coupon</a>
                             <div class="clearfix"></div>
                         </form>
                         {{/if}}
@@ -133,7 +133,7 @@
                     <label class="custom-file-label" for="customFile">Choose file CSV</label>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">upload file</button>
+                        <button type="submit" class="btn btn-warning">upload file</button>
                     </div>
                 </form>
 

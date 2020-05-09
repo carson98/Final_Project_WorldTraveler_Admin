@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 const multer = require('multer');
 const multipart = require('connect-multiparty')
 var chart = require('../config/setup_Chart')
@@ -27,9 +27,9 @@ router.get('/', isLoggedIn, async (req, res) => {
   })
   // filter order pending @.@
   // var order_pend = await glosbe_Daily.order_pending()
-  // filter top 5 product by profit
+  // filter top 5 tour by profit
   var top_5_Profit = []
-  await Product.find().sort({
+  await Tour.find().sort({
     totalProfit: -1
   }).limit(5).exec(async (err, rs) => {
     var i = 1;
@@ -39,9 +39,9 @@ router.get('/', isLoggedIn, async (req, res) => {
     })
     res.locals.top5_Profit = await rs
   })
-  // filter top 5 product by rating star
-  await Product.find().sort({
-    productRate: -1
+  // filter top 5 tour by rating star
+  await Tour.find().sort({
+    tourRate: -1
   }).limit(5).exec(async (err, rs) => {
     var i = 1;
     await rs.forEach(s => {
@@ -52,29 +52,29 @@ router.get('/', isLoggedIn, async (req, res) => {
   })
 
   // data for index page
-  Product.find(async (err, docs) => {
+  Tour.find(async (err, docs) => {
     // setup message notifications
     var message = await glosbe_Daily.message_notification()
     req.session.messsages = message
     var arr_filterChart = []
     for (var i = 0; i < docs.length; i++) {
-      // totalOrder += docs[i].orderList.length; // total order each product
-      totalProfit += docs[i].totalProfit // sum total profit of each product.
-      docs[i].totalOrder_eachProduct = 0
-      docs[i].totalQuantity_eachProduct = 0
+      // totalOrder += docs[i].orderList.length; // total order each tour
+      totalProfit += docs[i].totalProfit // sum total profit of each tour.
+      docs[i].totalOrder_eachTour = 0
+      docs[i].totalQuantity_eachTour = 0
       docs[i].orderList.forEach(s => {
         if (s.status != -1) {
-          docs[i].totalOrder_eachProduct++
-          docs[i].totalQuantity_eachProduct += s.totalQuantity
+          docs[i].totalOrder_eachTour++
+          docs[i].totalQuantity_eachTour += s.totalQuantity
         }
 
       })
       // setup data for option chart
       var object_filter_chart = {
         'proName': docs[i].title,
-        'total_Rating': docs[i].productRate,
-        'total_Order': docs[i].totalOrder_eachProduct,
-        'total_Quantity': docs[i].totalQuantity_eachProduct
+        'total_Rating': docs[i].tourRate,
+        'total_Order': docs[i].totalOrder_eachTour,
+        'total_Quantity': docs[i].totalQuantity_eachTour
       }
       arr_filterChart.push(object_filter_chart)
     }
@@ -131,7 +131,7 @@ router.post('/filter_date', async (req, res) => {
     res.locals.top5_Profit = await JSON.stringify(top5_Profit) // send data to top 5 profit
     await res.render('pages/index', {
       dashboard: 'dashboard',
-      totalProfit: totalItemProfit.toFixed(1), // view total value of product
+      totalProfit: totalItemProfit.toFixed(1), // view total value of tour
       totalOrder: totalAllOrder, // view total order number
       dailySales: obj_DailySales, // view percent value today with yesterday
       sessionUser: req.session.user,
@@ -145,8 +145,8 @@ router.post('/filterOption', (req, res) => {
   totalItemProfit
   var arr = []
   if (!req.body.proName.trim() && req.body.category != "0") {
-    Product.find({
-      'userGroup': req.body.category
+    Tour.find({
+      'category': req.body.category
     }, (err, docs) => {
       docs.forEach(s => {
         var obj = {};
@@ -157,7 +157,7 @@ router.post('/filterOption', (req, res) => {
       res.locals.arrProfit = JSON.stringify(arr)
     })
   } else if (req.body.proName.trim() && req.body.category === "0") {
-    Product.find({
+    Tour.find({
       'title': {
         '$regex': req.body.proName,
         '$options': 'i'
@@ -172,7 +172,7 @@ router.post('/filterOption', (req, res) => {
       res.locals.arrProfit = JSON.stringify(arr)
     })
   } else if (req.body.proName.trim() && req.body.category !== "0") {
-    Product.find({
+    Tour.find({
       'title': {
         '$regex': req.body.proName,
         '$options': 'i'
@@ -188,7 +188,7 @@ router.post('/filterOption', (req, res) => {
       res.locals.arrProfit = JSON.stringify(arr)
     })
   } else if (!req.body.proName.trim() && req.body.category === "0") {
-    Product.find((err, docs) => {
+    Tour.find((err, docs) => {
       docs.forEach(s => {
         var obj = {};
         obj.name = s.title;

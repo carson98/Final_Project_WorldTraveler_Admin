@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 var User = require('../models/user')
 var url = require('url');
 var filter = require('../config/filter_Func')
@@ -8,12 +8,16 @@ var filter = require('../config/filter_Func')
 let arrFilters = []
 router.get('/orderList', isLoggedIn, async (req, res) => {
     var arr = []
+    await Tour.paginate({}, { // pagination
+        page: req.params.page,
+        limit: 10
+    }),
     await User.find({
         'role': 'Customer'
     }, async (err, users) => {
         var numberStt = 0
         // Filter user role -> orderList (orderDate,totalPrice) -> sub_order (proId) -> orderNumber.
-        await Product.find(async (err, products) => {
+        await Tour.find(async (err, tours) => {
             await users.forEach(u => {
                 u.orderList.forEach(s => {
                     var obj = {}
@@ -27,7 +31,7 @@ router.get('/orderList', isLoggedIn, async (req, res) => {
                     s.sub_order.forEach(sb => {
                         obj.totalItem = obj.totalItem + sb.orderNumber.length
                         sb.orderNumber.forEach(o => {
-                            products.forEach(result => {
+                            tours.forEach(result => {
                                 result.orderList.forEach(p => {
                                     if (result._id == sb.proId && p.numberOrder == o) {
                                         if (p.status == 1) {
@@ -65,7 +69,7 @@ router.get('/filter_newOrder/:date', async (req, res) => {
     }, async (err, users) => {
         var numberStt = 0
         // Filter user role -> orderList (orderDate,totalPrice) -> sub_order (proId) -> orderNumber.
-        await Product.find((err, products) => {
+        await Tour.find((err, tours) => {
             users.forEach(u => {
                 u.orderList.forEach(s => {
                     var obj = {}
@@ -81,7 +85,7 @@ router.get('/filter_newOrder/:date', async (req, res) => {
                     s.sub_order.forEach(sb => {
                         obj.totalItem = obj.totalItem + sb.orderNumber.length
                         sb.orderNumber.forEach(o => {
-                            products.forEach(result => {
+                            tours.forEach(result => {
                                 result.orderList.forEach(p => {
                                     if (result._id == sb.proId && p.numberOrder == o && p.orderDate.toISOString().slice(0, 10) == req.params.date) {
                                         if (p.status == 0) {
@@ -146,8 +150,8 @@ router.get('/orderDetail/:numberOrder', async (req, res) => {
     var numOrder = req.params.numberOrder
     var arr = numOrder.split('-')
     User.findById(arr[0], (err, user) => {
-        Product.find((err, product) => {
-            var arrProduct = [],
+        Tour.find((err, tour) => {
+            var arrTour = [],
                 arr_proDelet = []
             var obj = {
                 'orderList': []
@@ -157,7 +161,7 @@ router.get('/orderDetail/:numberOrder', async (req, res) => {
                     obj.totalPrice = s.totalPrice
                     obj.orderDate = s.orderDate
                     s.sub_order.forEach(x => {
-                        product.forEach(pro => {
+                        tour.forEach(pro => {
                             if (pro._id == x.proId) {
                                 x.orderNumber.forEach(o => {
                                     pro.orderList.forEach(p => {
@@ -166,8 +170,8 @@ router.get('/orderDetail/:numberOrder', async (req, res) => {
                                             p.proPrice = pro.price
                                             p.proId = pro._id
                                             p.img = pro.imagePath
-                                            arrProduct.push(p) // view product detail
-                                            // setup delete product
+                                            arrTour.push(p) // view tour detail
+                                            // setup delete tour
                                             var proDelete = {
                                                 '_id': pro._id,
                                                 'numberOrder': p.numberOrder
@@ -181,14 +185,14 @@ router.get('/orderDetail/:numberOrder', async (req, res) => {
                     })
                 }
             })
-            obj.userInfo = arrProduct[0].userInfo
-            obj.couponCode = arrProduct[0].couponCode
-            obj.orderList = arrProduct
-            if (arrProduct[0].status == 1) {
+            obj.userInfo = arrTour[0].userInfo
+            obj.couponCode = arrTour[0].couponCode
+            obj.orderList = arrTour
+            if (arrTour[0].status == 1) {
                 obj.status = 'Done'
-            } else if (arrProduct[0].status == 0) {
+            } else if (arrTour[0].status == 0) {
                 obj.status = 'Pending'
-            } else if (arrProduct[0].status == -1) {
+            } else if (arrTour[0].status == -1) {
                 obj.status = 'Cancel'
             }
             res.render('orders/orderDetail', {
@@ -207,7 +211,7 @@ router.post('/updateStatus_Order', async (req, res) => {
     // forEeach find proId -> get old status + profit -> findoneandUpdate -> update status
     await arr_proDelet.forEach(arr => {
         var check = false
-        Product.findOneAndUpdate({
+        Tour.findOneAndUpdate({
             '_id': arr._id,
             'orderList.numberOrder': arr.numberOrder
         }, {
@@ -222,21 +226,31 @@ router.post('/updateStatus_Order', async (req, res) => {
                 check = true
             }
             if (check == true) {
-                Product.findById(arr._id, (async (err, doc) => {
-                    var totalValues = 0
+                Tour.findById(arr._id, (async (err, doc) => {
+                    var totalValues = 0;
+                    var returnSeat = doc.seat;
                     doc.orderList.forEach(p => {
                         if (p.status == 1) {
                             totalValues += p.totalHasDiscount
                         }
                     })
-                    Product.findByIdAndUpdate(arr._id, {
+                    var statusCancle = doc.orderList.filter( s => {
+                        if(s.numberOrder == arr.numberOrder)
+                        return s
+                    })
+                    console.log(statusCancle[0])
+                    if(statusCancle[0].status == -1){
+                        returnSeat = returnSeat + statusCancle[0].totalQuantity;
+                    }
+                    arrTour.findByIdAndUpdate(arr._id, {
                         '$set': {
-                            'totalProfit': totalValues
+                            'totalProfit': totalValues,
+                            'seat': returnSeat
                         }
                     }, {
                         upsert: true,
                         new: true
-                    }, (err, products) => {
+                    }, (err, tours) => {
                     })
                 }))
             }

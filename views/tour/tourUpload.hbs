@@ -1,0 +1,290 @@
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning">
+                        <h4 class="card-title">Add new tour</h4>
+                        <p class="card-category">Tour key: {{keyUpdate}}</p>
+                    </div>
+                    <div class="card-body">
+                        {{#if messages}}
+                        <div class="alert alert-warning">
+                            <strong>{{messages}}</strong>
+                        </div>
+                        {{/if}}
+                        {{#if pro}}
+                        <form action="/tour/tour-upload/{{keyUpdate}}" method="post"
+                            enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Name:</label>
+                                        <input value="{{pro.title}}" id="tourname" name="tourname" type="text"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Guide:</label>
+                                        <input value="{{pro.tourGuide}}" id="tourguide" name="tourguide" type="text"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Hotel:</label>
+                                        <input value="{{pro.hotel}}" id="hotel" name="hotel" type="text"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Category:</label>
+                                        <select id="category" name="category" class="custom-select" required>
+                                            <option selected value="true">Domestic</option>
+                                            <option value="false">International</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Depart from:</label>
+                                        {{!-- <input value="{{pro.depart}}" id="depart" name="depart" type="text" class="form-control"
+                                            required> --}}
+                                        <select id="depart" name="depart" class="custom-select" required>
+                                            {{#each departFrom}}
+                                            <option value={{this.id}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Destination:</label>
+                                        {{!-- <input value="{{pro.destination}}" id="destination" name="destination" type="text"
+                                            class="form-control" required> --}}
+                                        <select id="destination" name="destination" class="custom-select" required>
+                                            {{#each desTo}}
+                                            <option value={{this.id}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Seat Available:</label>
+                                        <input value="{{pro.seat}}" id="seat" name="seat" type="number"
+                                            class="form-control" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Date:</label>
+                                        <input value="{{pro.date}}" id="dates" name="dates" type="date"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Duration:</label>
+                                        <input value="{{pro.duration}}" id="duration" name="duration" type="number"
+                                            class="form-control" min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Price:</label>
+                                        <input value="{{pro.price}}" id="price" name="price" type="number"
+                                            class="form-control" min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Image:</label>
+                                    </div>
+                                    <div class="form-control custom-file">
+                                        <input class="custom-file-input" id="imagePath" name="imagePath"
+                                            accept="image/png,image/jpeg" type="file" required />
+                                        <label class="custom-file-label" for="customFile"
+                                            value="{{pro.imagePath}}">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description:</label>
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating"></label>
+                                            <textarea id="description" name="description" class="form-control"
+                                                rows="5">{{pro.description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning pull-right">Upload</button>
+                            <a name="" id="" class="btn btn-warning pull-right"
+                                href="/tour/tourDetail/{{keyUpdate}}" role="button">Back Detail</a>
+                            <div class="clearfix"></div>
+                        </form>
+                        {{else}}
+
+                        <form enctype="multipart/form-data" action="/tour/tour-upload/new" method="post">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Name:</label>
+                                        <input id="tourname" name="tourname" type="text" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Guide:</label>
+                                        <input id="tourguide" name="tourguide" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Hotel:</label>
+                                        <input id="hotel" name="hotel" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Category:</label>
+                                        <select id="category" name="category" class="custom-select" required>
+                                            <option selected value="true">Domestic</option>
+                                            <option value="false">International</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Depart from:</label>
+                                        {{!-- <input id="depart" name="depart" type="text" class="form-control" required> --}}
+                                        <select id="depart" name="depart" class="custom-select" required>
+                                            {{#each departFrom}}
+                                            <option value={{this.id}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Destination:</label>
+                                        {{!-- <input id="destination" name="destination" type="text" class="form-control"
+                                            required> --}}
+                                        <select id="destination" name="destination" class="custom-select" required>
+                                            {{#each desTo}}
+                                            <option value={{this.id}}>{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Seat Available:</label>
+                                        <input value="" id="seat" name="seat" type="number" class="form-control" min="0"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Date:</label>
+                                        <input value="" id="dates" name="dates" type="date" class="form-control"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Duration:</label>
+                                        <input value="" id="duration" name="duration" type="number" class="form-control"
+                                            min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Price:</label>
+                                        <input id="price" name="price" type="number" class="form-control" min="0"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Image:</label>
+                                    </div>
+                                    <div class="form-control custom-file">
+                                        <input class="custom-file-input" id="imagePath" name="imagePath"
+                                            accept="image/png,image/jpeg" type="file" required />
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Tour Schedule:</label>
+                                        <textarea name="description" id="description"
+                                            class="ckeditor form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-warning pull-right">Upload</button>
+                            <a name="" id="" class="btn btn-warning pull-right" href="/tour/tourList/1"
+                                role="button">Back to
+                                List</a>
+                            <div class="clearfix"></div>
+                        </form>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script>
+<script src="/javascripts/core/jquery.min.js"></script>
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+<script>
+    ClassicEditor.create(document.querySelector('#description'))
+        .then(description => {
+            console.log(description);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>

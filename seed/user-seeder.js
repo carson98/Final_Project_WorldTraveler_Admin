@@ -12,7 +12,7 @@ mongo.then(() => {
     console.log('err', err);
 });
 var newUser = new User();
-newUser.email = 'nhatnguyen@gmail.com';
+newUser.email = 'duminhtat98@gmail.com';
 newUser.password = newUser.encryptPassword('123');
 newUser.fullName = 'Hello world'
 newUser.phoneNum = '0123456789';

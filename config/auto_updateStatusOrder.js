@@ -1,8 +1,8 @@
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 module.exports = async (date_wantUpdate) => {
     var today = await new Date()
     var dateUpdate = 0
-    var pro = await Product.find(async (err, docs) => {
+    var pro = await Tour.find(async (err, docs) => {
         await docs.forEach(s => {
             s.orderList.forEach(x => {
                 var orderDate = x.orderDate.toISOString().slice(8, 10)
@@ -13,7 +13,7 @@ module.exports = async (date_wantUpdate) => {
         })
     })
     if(dateUpdate != 0){
-        await Product.findOneAndUpdate({
+        await Tour.findOneAndUpdate({
             'orderList.orderDate': dateUpdate
         },{
             'orderList.$.status': 1

@@ -1,4 +1,4 @@
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 var User = require('../models/user')
 module.exports = {
     'glosbeDaily': async function () {
@@ -9,7 +9,7 @@ module.exports = {
         var profit_yesterday = 0;
         var dailySales = 0
         var obj_DailySales = {}
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 s.orderList.forEach(x => {
                     if (x.orderDate.toISOString().slice(0, 10) == today.toISOString().slice(0, 10) && x.status == 1) {
@@ -58,7 +58,7 @@ module.exports = {
             'role': 'Customer'
         }, async (err, users) => {
             var today = new Date()
-            await Product.find(async (err, pro) => {
+            await Tour.find(async (err, pro) => {
                 var count = 0
                 await users.forEach(u => {
                     var check = false
@@ -67,9 +67,9 @@ module.exports = {
                         if (o.orderDate.toISOString().slice(0, 10) == today.toISOString().slice(0, 10)) {
                             o.sub_order.forEach(so => {
                                 so.orderNumber.forEach(no => {
-                                    pro.forEach(products => {
-                                        products.orderList.forEach(p => {
-                                            if (p.status == 0 && products._id == so.proId && p.numberOrder == no) {
+                                    pro.forEach(tours => {
+                                        tours.orderList.forEach(p => {
+                                            if (p.status == 0 && tours._id == so.proId && p.numberOrder == no) {
                                                 check = true
                                                 check_number = true
                                             }
@@ -103,13 +103,13 @@ module.exports = {
         var users = await User.find({
             'role': 'Customer'
         }, async (err, users) => {
-            var pro_duct = await Product.find(async (err, products) => {
+            var pro_duct = await Tour.find(async (err, tours) => {
                 users.forEach(u => {
                     u.orderList.forEach(user_order => {
                         var check = false
                         var obje = {}
                         user_order.sub_order.forEach(sub_or => {
-                            products.forEach(pro => {
+                            tours.forEach(pro => {
                                 if (sub_or.proId == pro._id) {
                                     sub_or.orderNumber.forEach(order_num => {
                                         pro.orderList.forEach(pro_order => {

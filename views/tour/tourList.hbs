@@ -1,15 +1,10 @@
 <div class="content">
-  <div class="container-fluid"></div>
   <div class="row">
     <div class="col-md-12">
       <div class="card card-plain">
-        <div class="card-header card-header-primary">
-          <h4 class="card-title mt-0">Product List <a href="/product/product-upload/new"
-              class="btn btn-primary pull-right" type="button">Create New</a></h4>
-          <p class="card-category">Synthesize information of each product</p>
-        </div>
         <div class="card-body">
-          <form action="/product/filter_Month" method="post">
+          <h4 class="text-warning"><strong>{{__ "Search Range Month"}}:</strong></h4>
+          <form action="/tour/filter_Month" method="post">
             <div class="row">
               <div class="form-group col-4">
                 <select class="form-control" name="searchMonth" id="searchMonth">
@@ -29,34 +24,37 @@
                 </select>
               </div>
               <div class="form-group col-4">
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <button type="submit" class="btn btn-warning">{{__ "Filter"}}</button>
               </div>
             </div>
           </form>
           <div class="table-responsive">
             <table class="table table-hover">
-              <thead class="text-primary">
+              <thead class="card-header card-header-warning">
                 <th>
                   No.
                 </th>
                 <th>
-                  Product Name
+                  {{__ "Tour Name"}}
                 </th>
                 <th>
-                  Product Price
+                  {{__ "Tour Price"}}
                 </th>
                 <th>
-                  Total Quantity
+                  {{__ "Total Quantity Booked"}}
                 </th>
                 <th>
-                  Total Order
+                  {{__ "Total Tour Booked"}}
                 </th>
                 <th>
-                  Total profit
+                  {{__ "Total Price"}}
+                </th>
+                <th>
+                  {{__ "View"}}
                 </th>
               </thead>
               <tbody>
-                {{#each products}}
+                {{#each tours}}
                 <tr>
                   <td>
                     {{this.number}}
@@ -77,13 +75,13 @@
                     $ {{this.orderInfo.price}}
                   </td>
                   <td>
-                    <a class="text-primary" href="/product/productDetail/{{this._id}}">Detail</a>
+                    <a class="text-warning" href="/tour/tourDetail/{{this._id}}">{{__ "Detail"}}</a>
                   </td>
                 </tr>
                 {{/each}}
                 <tr class="font-weight-bold text-uppercase">
                   <td></td>
-                  <td>Total all item:</td>
+                  <td>{{__ "Total all item"}}:</td>
                   <td></td>
                   <td>{{sumQuantity}}</td>
                   <td>{{sumOrder}}</td>
@@ -91,29 +89,35 @@
                   <td></td>
                 </tr>
               </tbody>
-                <nav class="pull-right" style=" padding-right: 50px; display: inline-block;">
-                  <ul class="pagination">
-                    <li class="page-item">
-                      <a class="page-link" style="color:blueviolet" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" style="color:blueviolet" href="/product/productList/1">1</a></li>
-                    <li class="page-item"><a class="page-link" style="color:blueviolet" href="/product/productList/2">2</a></li>
-                    <li class="page-item"><a class="page-link" style="color:blueviolet" href="/product/productList/3">3</a></li>
-                    <li class="page-item"><a class="page-link" style="color:blueviolet" href="/product/productList/4">4</a></li>
-                    <li class="page-item">
-                      <a class="page-link" style="color:blueviolet" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+              <nav class="pull-right" style=" padding-right: 50px; display: inline-block;">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" style="color:#fea21f" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" style="color:#fea21f" href="/tour/tourList/1">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" style="color:#fea21f" href="/tour/tourList/2">2</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" style="color:#fea21f" href="/tour/tourList/3">3</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" style="color:#fea21f" href="/tour/tourList/4">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" style="color:#fea21f" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </table>
             <div>
-              <a class="btn btn-primary pull-right" href="/product/exportData" role="button">download</a>
+              <a href="/tour/tour-upload/new" class="btn btn-warning pull-right"
+                type="button">{{__ "Create New Tour"}}</a>
+              <a class="btn btn-warning pull-left" href="/tour/exportData" role="button">{{__ "Download"}}</a>
             </div>
           </div>
         </div>

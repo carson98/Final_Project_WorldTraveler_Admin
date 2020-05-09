@@ -1,8 +1,8 @@
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 module.exports = {
     'filter_rangeDate': async (start_date, end_date) => {
         var arr = []
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 var obj = {
                     'title': s.title,
@@ -27,7 +27,7 @@ module.exports = {
     },
     'filter_month': async (month) => {
         var arr = []
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 var obj = {
                     "qty": 0,
@@ -49,7 +49,7 @@ module.exports = {
     'filter_status': async (status) => {
         var arr = []
         var number = 0
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 s.orderList.forEach(x => {
                     if (x.status == status) {
@@ -81,7 +81,7 @@ module.exports = {
     'filter_oneDate': async (date) => {
         var arr = []
         var number = 0
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 s.orderList.forEach(x => {
                     if (x.orderDate.toISOString().slice(0, 10) == date && x.status == 0) {
@@ -101,8 +101,8 @@ module.exports = {
     },
     'sort_star': async function (){
         var arr = []
-        var pro = await Product.find().sort({
-            productRate: -1
+        var pro = await Tour.find().sort({
+            tourRate: -1
           }).limit(5).exec(async (err, rs) => {
             var i = 1;
             await rs.forEach(s => {

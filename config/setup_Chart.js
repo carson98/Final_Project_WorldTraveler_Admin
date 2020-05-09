@@ -1,8 +1,8 @@
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 module.exports = {
     'lineChart': async function () {
         var arr = []
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             var month = ['0', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
             await month.forEach(m => {
                 var obj = {
@@ -24,7 +24,7 @@ module.exports = {
     },
     'pieChart': async function (totalProfit) {
         var arr = []
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 var obj = {
                     'name': s.title,
@@ -37,7 +37,7 @@ module.exports = {
     },
     'barChart': async function () {
         var arr = []
-        var pro = await Product.find(async (err, docs) => {
+        var pro = await Tour.find(async (err, docs) => {
             await docs.forEach(s => {
                 var obj = {
                     'title': s.title,
