@@ -60,10 +60,10 @@
                     {{this.number}}
                   </td>
                   <td>
-                    {{this.title}}
+                    {{this._doc.title}}
                   </td>
                   <td>
-                    $ {{this.price}}
+                    $ {{this._doc.price}}
                   </td>
                   <td>
                     {{this.orderInfo.qty}}
@@ -75,7 +75,7 @@
                     $ {{this.orderInfo.price}}
                   </td>
                   <td>
-                    <a class="text-warning" href="/tour/tourDetail/{{this._id}}">{{__ "Detail"}}</a>
+                    <a class="text-warning" href="/tour/tourDetail/{{this._doc._id}}">{{__ "Detail"}}</a>
                   </td>
                 </tr>
                 {{/each}}

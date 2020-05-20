@@ -8,7 +8,7 @@ var glosbe_Daily = require('../config/setup_GlosbeDaily')
 var filter_Func = require('../config/filter_Func')
 var auto_updateStatusOrder = require('../config/auto_updateStatusOrder')
 var User = require('../models/user')
-
+var UpdateStatus = require('../config/auto_updateStatusOrder');
 
 let totalItemProfit = 0; // setup total profit
 let totalAllOrder = 0; // setup total order
@@ -19,6 +19,7 @@ let top5_Profit = [],
 router.get('/', isLoggedIn, async (req, res) => {
   var totalProfit = 0;
   var totalOrder = 0;
+  UpdateStatus();
   User.find(async(err, user) => {
     user.forEach(s => {
       totalOrder += s.orderList.length
@@ -141,71 +142,71 @@ router.post('/filter_date', async (req, res) => {
   }
 })
 
-router.post('/filterOption', (req, res) => {
-  totalItemProfit
-  var arr = []
-  if (!req.body.proName.trim() && req.body.category != "0") {
-    Tour.find({
-      'category': req.body.category
-    }, (err, docs) => {
-      docs.forEach(s => {
-        var obj = {};
-        obj.name = s.title;
-        obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
-        arr.push(obj)
-      })
-      res.locals.arrProfit = JSON.stringify(arr)
-    })
-  } else if (req.body.proName.trim() && req.body.category === "0") {
-    Tour.find({
-      'title': {
-        '$regex': req.body.proName,
-        '$options': 'i'
-      }
-    }, (err, docs) => {
-      docs.forEach(s => {
-        var obj = {};
-        obj.name = s.title;
-        obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
-        arr.push(obj)
-      })
-      res.locals.arrProfit = JSON.stringify(arr)
-    })
-  } else if (req.body.proName.trim() && req.body.category !== "0") {
-    Tour.find({
-      'title': {
-        '$regex': req.body.proName,
-        '$options': 'i'
-      },
-      userGroup: req.body.category
-    }, (err, docs) => {
-      docs.forEach(s => {
-        var obj = {};
-        obj.name = s.title;
-        obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
-        arr.push(obj)
-      })
-      res.locals.arrProfit = JSON.stringify(arr)
-    })
-  } else if (!req.body.proName.trim() && req.body.category === "0") {
-    Tour.find((err, docs) => {
-      docs.forEach(s => {
-        var obj = {};
-        obj.name = s.title;
-        obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
-        arr.push(obj)
-      })
-      res.locals.arrPercent = JSON.stringify(arr)
-    })
-  }
-  // res.locals.arrTitle = JSON.stringify(arrTitle)
-  // res.locals.arrProfit = JSON.stringify(arrProfit)
-  res.render('pages/index', {
-    dashboard: 'dashboard',
-    totalProfit: totalItemProfit.toFixed(1),
-    totalOrder: totalAllOrder
-  })
-})
+// router.post('/filterOption', (req, res) => {
+//   totalItemProfit
+//   var arr = []
+//   if (!req.body.proName.trim() && req.body.category != "0") {
+//     Tour.find({
+//       'category': req.body.category
+//     }, (err, docs) => {
+//       docs.forEach(s => {
+//         var obj = {};
+//         obj.name = s.title;
+//         obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
+//         arr.push(obj)
+//       })
+//       res.locals.arrProfit = JSON.stringify(arr)
+//     })
+//   } else if (req.body.proName.trim() && req.body.category === "0") {
+//     Tour.find({
+//       'title': {
+//         '$regex': req.body.proName,
+//         '$options': 'i'
+//       }
+//     }, (err, docs) => {
+//       docs.forEach(s => {
+//         var obj = {};
+//         obj.name = s.title;
+//         obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
+//         arr.push(obj)
+//       })
+//       res.locals.arrProfit = JSON.stringify(arr)
+//     })
+//   } else if (req.body.proName.trim() && req.body.category !== "0") {
+//     Tour.find({
+//       'title': {
+//         '$regex': req.body.proName,
+//         '$options': 'i'
+//       },
+//       userGroup: req.body.category
+//     }, (err, docs) => {
+//       docs.forEach(s => {
+//         var obj = {};
+//         obj.name = s.title;
+//         obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
+//         arr.push(obj)
+//       })
+//       res.locals.arrProfit = JSON.stringify(arr)
+//     })
+//   } else if (!req.body.proName.trim() && req.body.category === "0") {
+//     Tour.find((err, docs) => {
+//       docs.forEach(s => {
+//         var obj = {};
+//         obj.name = s.title;
+//         obj.percent = ((s.totalProfit / totalItemProfit) * 100).toFixed(1)
+//         arr.push(obj)
+//       })
+//       res.locals.arrPercent = JSON.stringify(arr)
+//     })
+//   }
+//   // res.locals.arrTitle = JSON.stringify(arrTitle)
+//   // res.locals.arrProfit = JSON.stringify(arrProfit)
+//   res.render('pages/index', {
+//     dashboard: 'dashboard',
+//     totalProfit: totalItemProfit.toFixed(1),
+//     totalOrder: totalAllOrder
+//   })
+// })
 
 
 module.exports = router;

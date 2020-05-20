@@ -202,8 +202,8 @@
               {{#each top5_Profit}}
               <tr>
                 <td class="text-center">{{this.number}}</td>
-                <td class="text-center">{{this.title}}</td>
-                <td class="text-warning text-center">${{this.totalProfit}}</td>
+                <td class="text-center">{{this._doc.title}}</td>
+                <td class="text-warning text-center">${{this._doc.totalProfit}}</td>
               </tr>
               {{/each}}
             </tbody>
@@ -233,8 +233,8 @@
               {{#each top5_rating}}
               <tr>
                 <td class="text-center">{{this.number}}</td>
-                <td class="text-center">{{this.title}}</td>
-                <td class="text-warning text-center">{{this.tourRate}} <i class="fa fa-star" aria-hidden="true"></i></td>
+                <td class="text-center">{{this._doc.title}}</td>
+                <td class="text-warning text-center">{{this._doc.tourRate}} <i class="fa fa-star" aria-hidden="true"></i></td>
               </tr>
               {{/each}}
             </tbody>

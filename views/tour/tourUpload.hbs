@@ -20,7 +20,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Tour Name:</label>
-                                        <input value="{{pro.title}}" id="tourname" name="tourname" type="text"
+                                        <input value="{{pro._doc.title}}" id="tourname" name="tourname" type="text"
                                             class="form-control" required>
                                     </div>
                                 </div>
@@ -29,14 +29,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Tour Guide:</label>
-                                        <input value="{{pro.tourGuide}}" id="tourguide" name="tourguide" type="text"
+                                        <input value="{{pro._doc.tourGuide}}" id="tourguide" name="tourguide" type="text"
                                             class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Hotel:</label>
-                                        <input value="{{pro.hotel}}" id="hotel" name="hotel" type="text"
+                                        <input value="{{pro._doc.hotel}}" id="hotel" name="hotel" type="text"
                                             class="form-control">
                                     </div>
                                 </div>
@@ -82,21 +82,21 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Seat Available:</label>
-                                        <input value="{{pro.seat}}" id="seat" name="seat" type="number"
+                                        <input value="{{pro._doc.seat}}" id="seat" name="seat" type="number"
                                             class="form-control" min="0" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Date:</label>
-                                        <input value="{{pro.date}}" id="dates" name="dates" type="date"
+                                        <input value="{{pro._doc.date}}" id="dates" name="dates" type="date"
                                             class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Duration:</label>
-                                        <input value="{{pro.duration}}" id="duration" name="duration" type="number"
+                                        <input value="{{pro._doc.duration}}" id="duration" name="duration" type="number"
                                             class="form-control" min="0" required>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Tour Price:</label>
-                                        <input value="{{pro.price}}" id="price" name="price" type="number"
+                                        <input value="{{pro._doc.price}}" id="price" name="price" type="number"
                                             class="form-control" min="0" required>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                         <input class="custom-file-input" id="imagePath" name="imagePath"
                                             accept="image/png,image/jpeg" type="file" required />
                                         <label class="custom-file-label" for="customFile"
-                                            value="{{pro.imagePath}}">Choose file</label>
+                                            value="{{pro._doc.imagePath}}">Choose file</label>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                         <div class="form-group">
                                             <label class="bmd-label-floating"></label>
                                             <textarea id="description" name="description" class="form-control"
-                                                rows="5">{{pro.description}}</textarea>
+                                                rows="5">{{pro._doc.description}}</textarea>
                                         </div>
                                     </div>
                                 </div>

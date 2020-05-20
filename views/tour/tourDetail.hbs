@@ -9,7 +9,7 @@
             <p class="card-category">Synthesize information of this tour</p>
           </div>
           <div class="col-6">
-            <a href="/tour/tour-upload/{{proDetail._id}}" type="button" class="btn btn-warning pull-right"><i
+            <a href="/tour/tour-upload/{{proDetail._doc._id}}" type="button" class="btn btn-warning pull-right"><i
                 class="material-icons">edit</i></a>
           </div>
         </div>
@@ -28,13 +28,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Tour ID:</label>
-                          <p>{{this._id}}</p>
+                          <p>{{this._doc._id}}</p>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Tour Name:</label>
-                          <p>{{this.title}}</p>
+                          <p>{{this._doc.title}}</p>
                         </div>
                       </div>
                     </div>
@@ -42,7 +42,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Category:</label>
-                          {{#if this.category}}
+                          {{#if this._doc.category}}
                           <p>Domestic</p>
                           {{else}}
                           <p>International</p>
@@ -53,7 +53,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Tour Rate:</label>
-                          <p>{{this.tourRate}}</p>
+                          <p>{{this._doc.tourRate}}</p>
                         </div>
                       </div>
                     </div>
@@ -62,7 +62,7 @@
                         <div class="form-group">
                           <label class="bmd-label-floating">Depart:</label>
                           <div name="depart" id="depart">
-                            <p>{{this.depart}}</p>
+                            <p>{{this._doc.depart.name}}</p>
                           </div>
 
                         </div>
@@ -70,7 +70,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Destination:</label>
-                          <p>{{this.destination}}</p>
+                          <p>{{this._doc.destination.name}}</p>
                         </div>
                       </div>
                     </div>
@@ -79,14 +79,14 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Date:</label>
-                          <p>{{this.date}}</p>
+                          <p>{{this._doc.date}}</p>
 
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Duration:</label>
-                          <p>{{this.duration}}</p>
+                          <p>{{this._doc.duration}}</p>
                         </div>
                       </div>
                     </div>
@@ -95,14 +95,14 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Seat Available:</label>
-                          <p>{{this.seat}}</p>
+                          <p>{{this._doc.seat}}</p>
 
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Price:</label>
-                          <p>${{this.price}}</p>
+                          <p>${{this._doc.price}}</p>
                         </div>
                       </div>
                     </div>
@@ -117,11 +117,11 @@
               <div class="card">
                 <div class="card-body">
                   <div class="form-group">
-                    <img src="../../images/{{proDetail.imagePath}}"
+                    <img src="../../images/{{proDetail._doc.imagePath}}"
                       class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                       alt="Image Tour" />
                   </div>
-                  <h6 class="card-category text-gray text-center">{{proDetail.title}}</h6>
+                  <h6 class="card-category text-gray text-center">{{proDetail._doc.title}}</h6>
                 </div>
               </div>
             </div>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="card-body">
                   <textarea id="description"
-                    style="overflow: scroll; height: 288px;">{{proDetail.description}}</textarea>
+                    style="overflow: scroll; height: 288px;">{{proDetail._doc.description}}</textarea>
                 </div>
               </div>
             </div>
@@ -184,34 +184,34 @@
                         {{#each orderDetail}}
                         <tr>
                           <td>
-                            {{this.numberOrder}}
+                            {{this._doc.numberOrder}}
                           </td>
                           <td>
-                            {{this.orderDate}}
+                            {{this._doc.orderDate}}
                           </td>
                           <td>
-                            {{this.userInfo.name}}
+                            {{this._doc.userInfo.name}}
                           </td>
                           <td>
-                            {{this.userInfo.phoneNum}}
+                            {{this._doc.userInfo.phoneNum}}
                           </td>
                           <td>
-                            {{this.userInfo.address}}
+                            {{this._doc.userInfo.address}}
                           </td>
                           <td>
-                            {{this.couponCode.description}}
+                            {{this._doc.couponCode.description}}
                           </td>
                           <td>
-                            {{this.totalQuantity}}
+                            {{this._doc.totalQuantity}}
                           </td>
                           <td>
-                            {{this.Size}}
+                            {{this._doc.Size}}
                           </td>
                           <td>
-                            $ {{this.totalPrice}}
+                            $ {{this._doc.totalPrice}}
                           </td>
                           <td>
-                            {{this.status}}
+                            {{this._doc.status}}
                           </td>
                         </tr>
                         {{/each}}
