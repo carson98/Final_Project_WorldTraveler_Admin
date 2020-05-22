@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-8" style="padding-left:50px;">
+            <div class="col-8" style="padding-left:50px; padding: 23px;">
               <div class="card">
                 <div class="card-body">
                   <form action="/order/updateStatus_Order" method="post">
@@ -95,22 +95,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Order status:</label>
-                          <select class="form-control" name="status" id="status">
-                            <option value="{{this.status}}" selected hidden>{{this.status}}</option>
-                            <option value="1">Done</option>
-                            <option value="0">Pending</option>
-                            <option value="-1">Cancel</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <button name="" id="" class="btn btn-warning pull-right" role="button">Update</button>
-                    </div>
                     {{/orderDetail}}
                   </form>
                 </div>
@@ -130,6 +114,25 @@
                 </div>
               </div>
               {{/each}}
+
+              {{#orderDetail}}
+              <div class="card pt-2">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Order status:</label>
+                    <select class="form-control" name="status" id="status">
+                      <option value="{{this.status}}" selected hidden>{{this.status}}</option>
+                      <option value="1">Done</option>
+                      <option value="0">Pending</option>
+                      <option value="-1">Cancel</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <button name="" id="" class="btn btn-warning pull-right" role="button">Update</button>
+                  </div>
+                </div>
+              </div>
+              {{/orderDetail}}
             </div>
 
           </div>

@@ -37,9 +37,6 @@
                 <th>
                   {{__ "Status"}}
                 </th>
-                <th>
-                  {{__ "View"}}
-                </th>
               </thead>
               <tbody>
                 {{#each coupons}}
@@ -58,9 +55,6 @@
                   </td>
                   <td>
                     {{this.status}}
-                  </td>
-                  <td>
-                    <a class="text-warning" href="/coupon/couponDetail/{{this._id}}">{{__ "Detail"}}</a>
                   </td>
                 </tr>
                 {{/each}}
@@ -92,10 +86,38 @@
             </table>
           </div>
           <div>
+            <a type="button" class="btn btn-warning" style="color: #fff !important;" data-toggle="modal" data-target="#modelId">Send file
+              coupon to customer</a>
+            <a href="/coupon/download_Template" type="button" class="btn btn-warning pull-left">Create file coupon</a>
             <a href="/coupon/couponDetail/new" class="btn btn-warning pull-right" type="button">{{__ "Create New"}}</a>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true"
+    data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload coupon file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="/coupon/read_csv" method="post">
+                    <input class="custom-file-input" type="file" id="file" name="file" accept=".csv" required />
+                    <label class="custom-file-label" for="customFile">Choose file CSV</label>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Upload file</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

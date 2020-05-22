@@ -4,10 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning">
-                        <h4 class="card-title">Create Coupon
-                            <a type="button" class="btn btn-warning pull-right" data-toggle="modal"
-                                data-target="#modelId">Send file coupon to customer</a>
-                        </h4>
+                        <h4 class="card-title">Create Coupon</h4>
                         <p class="card-category">Create information of this coupon</p>
                     </div>
                     <div class="card-body">
@@ -36,8 +33,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Coupon Discount(%):</label>
-                                        <input value="{{coupons._doc.discount}}" id="discount" name="discount" type="number"
-                                            class="form-control" min="1" max="100">
+                                        <input value="{{coupons._doc.discount}}" id="discount" name="discount"
+                                            type="number" class="form-control" min="1" max="100">
                                     </div>
                                 </div>
                             </div>
@@ -102,8 +99,6 @@
                             </div>
                             <button type="submit" class="btn btn-warning pull-right">Upload</button>
                             <a href="../couponList/1" type="button" class="btn btn-warning pull-right">Back List</a>
-                            <a href="/coupon/dowload_Template" type="button"
-                                class="btn btn-warning pull-left">Create file coupon</a>
                             <div class="clearfix"></div>
                         </form>
                         {{/if}}
@@ -115,33 +110,6 @@
 </div>
 
 
-
-<!-- Modal -->
-<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true"
-    data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Upload coupon file</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form enctype="multipart/form-data" action="/coupon/read_csv" method="post">
-                    <input class="custom-file-input" type="file" id="file" name="file" accept=".csv" required />
-                    <label class="custom-file-label" for="customFile">Choose file CSV</label>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-warning">upload file</button>
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
-    </div>
-</div>
 <script src="/javascripts/core/jquery.min.js"></script>
 <script>
     // Add the following code if you want the name of the file appear on select
