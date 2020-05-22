@@ -139,6 +139,8 @@ router.post("/filter_orderPending", async (req, res) => {
     notification: req.session.messsages,
   });
 });
+
+// Filter Status
 router.post("/filter_status", async (req, res) => {
   if (req.body.status == 2) {
     res.redirect("./orderList");

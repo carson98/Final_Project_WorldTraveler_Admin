@@ -1,6 +1,6 @@
 var Company = require('../models/company');
 var mongoose = require('mongoose');
-const mongo = mongoose.connect('mongodb://localhost:27017/shopping',{useNewUrlParser: true});
+const mongo = mongoose.connect('mongodb://localhost:27017/WorldTraveler',{useNewUrlParser: true});
 mongo.then(() => {
     console.log('connected');
     }).catch((err) => {

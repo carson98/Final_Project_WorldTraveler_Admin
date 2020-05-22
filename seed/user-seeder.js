@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-const mongo = mongoose.connect('mongodb://localhost:27017/shopping', {
+const mongo = mongoose.connect('mongodb://localhost:27017/WorldTraveler', {
     useNewUrlParser: true
 });
 mongo.then(() => {

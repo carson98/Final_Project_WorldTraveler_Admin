@@ -171,9 +171,6 @@
                           Total Quantity
                         </th>
                         <th>
-                          Size
-                        </th>
-                        <th>
                           Total Price
                         </th>
                         <th>
@@ -184,34 +181,31 @@
                         {{#each orderDetail}}
                         <tr>
                           <td>
-                            {{this._doc.numberOrder}}
+                            {{this.numberOrder}}
+                          </td>
+                          <td style="width: 15em; word-wrap: break-word !important;">
+                            {{this.orderDate}}
                           </td>
                           <td>
-                            {{this._doc.orderDate}}
+                            {{this.userInfo.name}}
                           </td>
                           <td>
-                            {{this._doc.userInfo.name}}
+                            {{this.userInfo.phoneNum}}
                           </td>
                           <td>
-                            {{this._doc.userInfo.phoneNum}}
+                            {{this.userInfo.address}}
+                          </td>
+                          <td class="text-center">
+                            {{this.couponCode.description}}
+                          </td>
+                          <td class="text-center">
+                            {{this.totalQuantity}}
+                          </td>
+                          <td class="text-center">
+                            $ {{this.totalPrice}}
                           </td>
                           <td>
-                            {{this._doc.userInfo.address}}
-                          </td>
-                          <td>
-                            {{this._doc.couponCode.description}}
-                          </td>
-                          <td>
-                            {{this._doc.totalQuantity}}
-                          </td>
-                          <td>
-                            {{this._doc.Size}}
-                          </td>
-                          <td>
-                            $ {{this._doc.totalPrice}}
-                          </td>
-                          <td>
-                            {{this._doc.status}}
+                            {{this.status}}
                           </td>
                         </tr>
                         {{/each}}

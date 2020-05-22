@@ -11,6 +11,7 @@ module.exports = async () => {
           Number(today.toISOString().slice(8, 10)) - Number(orderDate) == 1 &&
           x.status == 0
         ) {
+          console.log(today)
           dateUpdate = x.orderDate;
         }
       });

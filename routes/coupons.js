@@ -49,7 +49,7 @@ router.post("/read_csv", upload.single("file"), (req, res) => {
           code: coupons._id,
         };
         var content = `
-            <p>- The COZA fashion give you some gifts</p>
+            <p>We give you a gifts</p>
             <h3>Gifts Details</h3>
             <ul>
                 <li>Email: ${obj.email}.</li>

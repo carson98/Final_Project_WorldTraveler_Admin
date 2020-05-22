@@ -19,7 +19,7 @@ let top5_Profit = [],
 router.get('/', isLoggedIn, async (req, res) => {
   var totalProfit = 0;
   var totalOrder = 0;
-  UpdateStatus();
+  console.log(UpdateStatus().then(s => console.log(s)));
   User.find(async(err, user) => {
     user.forEach(s => {
       totalOrder += s.orderList.length

@@ -19,7 +19,7 @@ var glosbe_Daily = require('./config/setup_GlosbeDaily')
 var i18n = require('i18n')
 
 var app = express();
-mongoose.connect('mongodb://localhost:27017/shopping', {
+mongoose.connect('mongodb://localhost:27017/WorldTraveler', {
   useNewUrlParser: true
 });
 require('./config/passport')

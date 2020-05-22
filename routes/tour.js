@@ -6,7 +6,6 @@ const multipart = require("connect-multiparty");
 var filter = require("../config/filter_Func");
 var check = require("../config/check_valid");
 var totalValues = require("../config/setup_totalValues");
-var getNameTour = require('../config/getName_Func')
 /* GET home page. */
 
 // using upload image
@@ -206,38 +205,21 @@ router.get("/tourDetail/:id", (req, res) => {
 
 router.get("/tour-upload/:id", (req, res) => {
   Tour.findById(req.params.id, (err, doc) => {
-    var departFrom = [];
-    var desTo = [];
-    Tour.find((errs, rs) => {
-      rs.forEach(s => {
-        if (s.category === true) {
-          var obj = departFrom.find(a => a.id === s.depart.id);
-          if (obj === undefined) {
-            departFrom.push(s.depart);
-          }
-        }
-        desTo.push(s.destination)
-      });
       res.render("tour/tourUpload", {
         keyUpdate: req.params.id,
         tour: "tour",
         pro: doc,
-        departFrom: departFrom,
-        desTo: desTo,
         sessionUser: req.session.user,
         notification: req.session.messsages
       });
     });
-
   });
-
-});
 
 router.post(
   "/tour-upload/:id",
   upload.single("imagePath"),
   async (req, res) => {
-    var checks = await check.check_valid(req.body.tourname);
+    var checks = await check.check_valid(req.body.title);
     if (checks == false) {
       await res.render("tour/tourUpload", {
         keyUpdate: req.params.id,
@@ -251,7 +233,7 @@ router.post(
       if (key == "new") {
         var pro = new Tour({
           imagePath: req.file.originalname, // req.body.imagePath
-          title: req.body.tourname.trim(),
+          title: req.body.title.trim(),
           description: req.body.description,
           category: req.body.category,
           price: req.body.price,
@@ -269,20 +251,6 @@ router.post(
         });
         pro.save();
       } else {
-        var departObj = {
-          id: req.body.depart,
-          name: null
-        }
-        var destinationObj = {
-          id: req.body.destination,
-          name: null
-        }
-        await getNameTour(req.body.depart).then(data => {
-          departObj.name = data
-        })
-        await getNameTour(req.body.destination).then(data => {
-          destinationObj.name = data
-        })
         await Tour.findOneAndUpdate(
           {
             _id: key
@@ -290,12 +258,12 @@ router.post(
           {
             $set: {
               imagePath: req.file.originalname, // req.body.imagePath
-              title: req.body.tourname,
+              title: req.body.title,
               description: req.body.description,
               category: req.body.category,
               price: req.body.price,
-              depart: departObj,
-              destination: destinationObj,
+              depart: req.body.depart,
+              destination: req.body.destination,
               date: req.body.dates,
               duration: req.body.duration,
               seat: req.body.seat,
@@ -308,9 +276,7 @@ router.post(
             upsert: true
           },
           (err, doc) => {}
-        );
-        // console.log(departObj)
-        
+        );        
       }
       res.redirect("../tourList/1");
     }
