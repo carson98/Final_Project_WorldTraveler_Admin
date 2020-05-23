@@ -6,6 +6,7 @@ const multipart = require("connect-multiparty");
 var filter = require("../config/filter_Func");
 var check = require("../config/check_valid");
 var totalValues = require("../config/setup_totalValues");
+var getNameTour = require("../config/getName_Func");
 /* GET home page. */
 
 // using upload image
@@ -16,11 +17,11 @@ var storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
-  }
+  },
 });
 
 const upload = multer({
-  storage: storage
+  storage: storage,
 });
 
 router.get("/exportData", (req, res) => {
@@ -48,20 +49,20 @@ router.get("/exportData", (req, res) => {
       total_profit += totalPrice;
       var obj = {
         qty: quantity,
-        price: totalPrice.toFixed(1)
+        price: totalPrice.toFixed(1),
       };
       docs[i].orderInfo = obj;
     }
     var objTotal = {
       title: "Total",
       orderInfo: { qty: total_quantity, price: total_profit.toFixed(1) },
-      orderList: []
+      orderList: [],
     };
     objTotal.orderList.length = total_order;
     docs.push(objTotal);
     res.writeHead(200, {
       "Content-Type": "text/csv",
-      "Content-Disposition": "attachment; filename=report.csv"
+      "Content-Disposition": "attachment; filename=report.csv",
     });
 
     res.end(
@@ -69,7 +70,7 @@ router.get("/exportData", (req, res) => {
         "Tour Name",
         "Total Quantity",
         "Total Order",
-        "Total Profit"
+        "Total Profit",
       ]),
       "binary"
     );
@@ -84,7 +85,7 @@ router.post("/filter_Month", async (req, res) => {
     var sumQuantity = 0;
     var sumProfit = 0;
     var sumOrder = 0;
-    filter_month.forEach(s => {
+    filter_month.forEach((s) => {
       sumQuantity += s.qty;
       sumProfit += s.price;
       sumOrder += s.order;
@@ -101,17 +102,18 @@ router.post("/filter_Month", async (req, res) => {
         sumQuantity: sumQuantity,
         sumOrder: sumOrder,
         sessionUser: req.session.user,
-        notification: req.session.messsages
+        notification: req.session.messsages,
       });
     });
   }
 });
 router.get("/tourList/:page", isLoggedIn, async (req, res) => {
-  await Tour.paginate({},
+  await Tour.paginate(
+    {},
     {
       // pagination
       page: req.params.page,
-      limit: 10
+      limit: 10,
     },
     async (err, rs) => {
       // to do view tour list
@@ -142,7 +144,7 @@ router.get("/tourList/:page", isLoggedIn, async (req, res) => {
         var obj = {
           qty: quantity,
           price: totalPrice.toFixed(1),
-          order: totalOrder_eachTour
+          order: totalOrder_eachTour,
         };
         sumOrder += totalOrder_eachTour;
         sumProfit += totalPrice;
@@ -156,7 +158,7 @@ router.get("/tourList/:page", isLoggedIn, async (req, res) => {
         sumQuantity: sumQuantity,
         sumOrder: sumOrder,
         sessionUser: req.session.user,
-        notification: req.session.messsages
+        notification: req.session.messsages,
       });
     }
   );
@@ -198,22 +200,23 @@ router.get("/tourDetail/:id", (req, res) => {
       totalOrderQty: sumQty,
       tour: "tour",
       sessionUser: req.session.user,
-      notification: req.session.messsages
+      notification: req.session.messsages,
     });
   });
 });
 
 router.get("/tour-upload/:id", (req, res) => {
   Tour.findById(req.params.id, (err, doc) => {
-      res.render("tour/tourUpload", {
-        keyUpdate: req.params.id,
-        tour: "tour",
-        pro: doc,
-        sessionUser: req.session.user,
-        notification: req.session.messsages
-      });
+    console.log(doc)
+    res.render("tour/tourUpload", {
+      keyUpdate: req.params.id,
+      tour: "tour",
+      pro: doc,
+      sessionUser: req.session.user,
+      notification: req.session.messsages,
     });
   });
+});
 
 router.post(
   "/tour-upload/:id",
@@ -226,10 +229,18 @@ router.post(
         messages: "The fields have special characters.!",
         tour: "tour",
         sessionUser: req.session.user,
-        notification: req.session.messsages
+        notification: req.session.messsages,
       });
     } else {
       var key = req.params.id;
+      var departObj = {
+        id: "",
+        name: req.body.depart,
+      };
+      var destinationObj = {
+        id: "",
+        name: req.body.destination,
+      };
       if (key == "new") {
         var pro = new Tour({
           imagePath: req.file.originalname, // req.body.imagePath
@@ -237,8 +248,8 @@ router.post(
           description: req.body.description,
           category: req.body.category,
           price: req.body.price,
-          depart: req.body.depart,
-          destination: req.body.destination,
+          depart: departObj,
+          destination: destinationObj,
           date: req.body.dates,
           duration: req.body.duration,
           seat: req.body.seat,
@@ -247,13 +258,20 @@ router.post(
           reviews: [],
           orderList: [],
           tourRate: 0,
-          totalProfit: 0
+          totalProfit: 0,
         });
         pro.save();
       } else {
+
+        // await getNameTour(req.body.depart).then((data) => {
+        //   departObj.name = data;
+        // });
+        // await getNameTour(req.body.destination).then((data) => {
+        //   destinationObj.name = data;
+        // });
         await Tour.findOneAndUpdate(
           {
-            _id: key
+            _id: key,
           },
           {
             $set: {
@@ -262,21 +280,21 @@ router.post(
               description: req.body.description,
               category: req.body.category,
               price: req.body.price,
-              depart: req.body.depart,
-              destination: req.body.destination,
+              depart: departObj,
+              destination: destinationObj,
               date: req.body.dates,
               duration: req.body.duration,
               seat: req.body.seat,
               tourGuide: req.body.tourguide,
-              hotel: req.body.hotel
-            }
+              hotel: req.body.hotel,
+            },
           },
           {
             new: true,
-            upsert: true
+            upsert: true,
           },
           (err, doc) => {}
-        );        
+        );
       }
       res.redirect("../tourList/1");
     }
@@ -287,7 +305,7 @@ router.get("/tour-update", (req, res) => {
   res.render("tour/tourUpdate", {
     tour: "tour",
     sessionUser: req.session.user,
-    notification: req.session.messsages
+    notification: req.session.messsages,
   });
 });
 
@@ -307,7 +325,7 @@ function dataToCSV(dataList, headers) {
   allObjects.push(headers);
 
   //Now iterating through the list and build up an array that contains the data of every object in the list, in the same order of the headers
-  dataList.forEach(function(object) {
+  dataList.forEach(function (object) {
     var arr = [];
     arr.push(object.title);
     arr.push(object.orderInfo.qty);
@@ -323,7 +341,7 @@ function dataToCSV(dataList, headers) {
 
   // The code below takes two-dimensional array and converts it to be strctured as CSV
   // *** It can be taken apart from the function, if all you need is to convert an array to CSV
-  allObjects.forEach(function(infoArray, index) {
+  allObjects.forEach(function (infoArray, index) {
     var dataString = infoArray.join(",");
     csvContent += index < allObjects.length ? dataString + "\n" : dataString;
   });

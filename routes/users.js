@@ -5,10 +5,6 @@ var User = require('../models/user')
 var csrf = require('csurf');
 var passport = require('passport')
 
-
-
-
-
 router.post('/filterEmail', function (req, res, next) {
   if (req.body.email && req.body.email.trim()) {
     User.find({
@@ -35,10 +31,6 @@ router.post('/filterEmail', function (req, res, next) {
   }
 
 })
-
-
-
-
 
 var csurfProtection = csrf();
 router.use(csurfProtection);
